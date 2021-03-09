@@ -45,7 +45,6 @@ Shop.prototype.cookiesEachHourFn= function(){
 
 
 
-
 let seattle=new Shop('Seattle', 23, 65, 6.3);
 console.log ( seattle.cookiesEachHourFn())
 
@@ -69,17 +68,43 @@ function getTable(){
     let myTable=document.createElement('table');
     let tableBody=document.createElement('tbody');
 
-    for (let i=0; i<5 ; i++){
-        let row=document.createElement('tr');
-
-        for (let x=0; x<hours; x++){
+    for (let i=0; i< hours.length; i++){
+        let heading=document.createElement('th');
+        heading.innerText= hours[i];
+        tableBody.appendChild(heading);
+        for (let i=0; i<5; i++){
+            let row=document.createElement('tr');
+            heading.appendChild(row);
             let cell=document.createElement('td');
-            let cellText= document.createTextNode('cell in row' +i+ ', column'+j);
-            cell.appendChild(cellText);
+            cell=document.createTextNode(seattle.cityName);
             row.appendChild(cell);
         }
-        tableBody.appendChild(row);
     }
+
+    
+
+    
+
+
+
+
+
+
+
+
+
+    
+    // for (let i=0; i<5 ; i++){
+    //     let row=document.createElement('tr');
+
+    //     for (let x=0; x<hours.length; x++){
+    //         let cell=document.createElement('td');
+    //         let cellText= document.createTextNode('cell in row' +i+ ', column'+x);
+    //         cell.appendChild(cellText);
+    //         row.appendChild(cell);
+    //     }
+    //     tableBody.appendChild(row);
+    // }
     myTable.appendChild(tableBody);
     body.appendChild(myTable);
     myTable.setAttribute('border', '2');
