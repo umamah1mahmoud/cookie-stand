@@ -69,7 +69,7 @@ function getTable(){
     let myTable=document.createElement('table');
     let tableBody=document.createElement('tbody');
 
-    for (let i=0; i<hours ; i++){
+    for (let i=0; i<5 ; i++){
         let row=document.createElement('tr');
 
         for (let x=0; x<hours; x++){
@@ -86,7 +86,15 @@ function getTable(){
 
 }
 
+getTable([['Branch', hours], [seattle.cityName, (seattle.cookiesEachHourFn())], [tokyo.cityName, tokyo.cookiesEachHourFn()], [dubai.cityName, dubai.cookiesEachHourFn()], [paris.cityName, paris.cookiesEachHourFn()], [lima.cityName, lima.cookiesEachHourFn()]]);
 
+
+
+// let shopsTable=document.createElement('table');
+// let tableRow=document.createElement('tr')
+// let theCity= document.createElement('td')
+// theCity.innerText=lima.cityName;
+// main.appendChild(theCity);
 
 
 
@@ -132,11 +140,7 @@ function getTable(){
 
 
 
-// let shopsTable=document.createElement('table');
-// let tableRow=document.createElement('tr')
-// let theCity= document.createElement('td')
-// theCity.innerText=lima.cityName;
-// main.appendChild(theCity);
+
 
 
 
