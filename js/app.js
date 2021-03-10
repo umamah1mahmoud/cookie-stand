@@ -1,268 +1,128 @@
 'use strict';
-let main=document.getElementById('sales');
-let hours=['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm'];
-let i=0;
-let total=0;
+// >>>>>>>>>>>>>>>>>>>>>>>>>> GLOBAL
 
-function Shop(cityName, minCus, maxCus, avgSale){
-    this.cityName=cityName;
-    this.minCus=minCus;
-    this.maxCus=maxCus;
-    this.avgSale=avgSale;
+let shopsSales=document.getElementById('shopTable');
+let hours=['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm'];
+
+// >>>>>>>>>>>>>>>>>>>>>>>> Creating Constructor
+
+function Shop(city, minHourlyCus, maxHourlyCus, avgCookiesPerCus){
+    this.city=city;
+    this.minHourlyCus=minHourlyCus;
+    this.maxHourlyCus=maxHourlyCus;
+    this.avgCookiesPerCus=avgCookiesPerCus;
+    this.customersEachHour=[];
     this.cookiesEachHour=[];
-    this.customerNumber=0;
-    this.cookiesPerHour=0;
-}
+    this.totalCookiesDaily=0;    
+};
+
+// >>>>>>>>>>>>>>>>>>>>>>>> Creating Methods
 
 Shop.prototype.randomGenerator=function(min,max){
-    min=this.minCus;
-    max=this.maxCus;
+    min=this.minHourlyCus;
+    max=this.maxHourlyCus;
     return Math.floor(Math.random()*(max-min)+min);
 };
 
-Shop.prototype.customersHour=function(){
-    let number=this.customerNumber;
-        number=Math.floor(this.randomGenerator(this.minCus,this.maxCus));
-        return number;
-};
-        
-Shop.prototype.cookiesHour=function(){
-    let Hour=Math.floor(this.randomGenerator(this.minCus,this.maxCus)*this.avgSale);
-    return Hour;
-};
-
-Shop.prototype.cookiesEachHourFn= function(){
-    for (let i=0; i<hours.length; i++){
-        let a= Math.floor(this.randomGenerator(this.minCus,this.maxCus)*this.avgSale);
-        this.cookiesEachHour.push(a);
+Shop.prototype.calCustomersEachHour=function(){
+    for (let i=0; i< hours.length; i++){
+        this.customersEachHour.push(this.randomGenerator(this.minHourlyCus, this.maxHourlyCus));
     }
-    total+=this.cookiesEachHour[i];
-    this.cookiesEachHour.push(total);
-    return this.cookiesEachHour ;
+    
+};
+
+Shop.prototype.calCookiesEachHour=function(){
+    this.calCustomersEachHour();
+    for (let i = 0; i < hours.length; i++){
+        let eachHour= Math.floor(this.customersEachHour[i] * this.avgCookiesPerCus);
+        this.cookiesEachHour.push(eachHour);
+        this.totalCookiesDaily += eachHour;
+    }
+};
+
+// >>>>>>>>>>>>>>>>>>>>>>>> Creating The Render Method To Put Values Into Table
+
+
+Shop.prototype.render= function(){
+    this.calCookiesEachHour();
+    let tRow= document.createElement('tr');
+    let tData= document.createElement('td');
+    tData.textContent= this.city;
+    tRow.appendChild(tData);
+
+    for(let i=0; i<hours.length; i++){
+        tData= document.createElement('td');
+        tData.textContent= this.cookiesEachHour[i];
+        tRow.appendChild(tData);
+    }
+    let tHeader= document.createElement ('th');
+    tHeader.textContent= this.totalCookiesDaily;
+    tRow.appendChild(tHeader);
+    shopsSales.appendChild(tRow);
 };
 
 
-
+// >>>>>>>>>>>>>>>>>>>>>>>> Setting Values For The Shops
 
 
 let seattle=new Shop('Seattle', 23, 65, 6.3);
-console.log ( seattle.cookiesEachHourFn())
-
 let tokyo=new Shop('Tokyo', 3, 24, 1.2);
-console.log ( tokyo.cookiesEachHourFn())
-
 let dubai=new Shop('Dubai', 11, 38, 3.7);
-console.log ( dubai.cookiesEachHourFn())
-
 let paris=new Shop('Paris', 20, 38, 2.3);
-console.log (paris.cookiesEachHourFn())
-
 let lima=new Shop('Lima', 2, 16, 4.6);
-console.log ( lima.cookiesEachHourFn())
+let citiesList=[seattle, tokyo, dubai, paris, lima];
 
 
+// >>>>>>>>>>>>>>>>>>>>>>>> Creating Table Header
 
 
-function getTable(){
-    let body= document.getElementsByTagName('body') [0];
-    let myTable=document.createElement('table');
-    let tableBody=document.createElement('tbody');
-
+function getHeader(){
+    let tRow= document.createElement('tr');
+    let tHeader= document.createElement ('th');
+    tHeader.textContent= 'Branches';
+    tRow.appendChild(tHeader);
+    
     for (let i=0; i< hours.length; i++){
-        let heading=document.createElement('th');
-        heading.innerText= hours[i];
-        tableBody.appendChild(heading);
-        for (let i=0; i<5; i++){
-            let row=document.createElement('tr');
-            heading.appendChild(row);
-            let cell=document.createElement('td');
-            cell=document.createTextNode(seattle.cityName);
-            row.appendChild(cell);
-        }
+        tHeader= document.createElement ('th');
+        tHeader.textContent= hours[i];
+        tRow.appendChild(tHeader);
     }
+    tHeader= document.createElement('th');
+    tHeader.textContent= 'Branches Total Sales'
+    tRow.appendChild(tHeader);
+    shopsSales.appendChild(tRow);
+};
 
-    
+// >>>>>>>>>>>>>>>>>>>>>>>> Creating Table Footer
 
-    
+function getFooter(){
+    let tRow= document.createElement('tr');
+    let tHeader= document.createElement ('th');
+    tHeader.textContent= 'Hourly Total Sales for All Branches';
+    tRow.appendChild(tHeader);
+    let totalOfTotals= 0;
+    for (let i=0; i< hours.length; i++){
+        let hourlyTotal= 0;
+        for (let k=0; k< citiesList.length; k++){
+            hourlyTotal += citiesList[k].cookiesEachHour[i];
+            totalOfTotals += citiesList[k].cookiesEachHour[i];
+        }
+        tHeader = document.createElement('th');
+        tHeader.textContent = hourlyTotal;
+        tRow.appendChild(tHeader);
+    }
+    tHeader= document.createElement('th');
+    tHeader.textContent= totalOfTotals;
+    tRow.appendChild(tHeader);
+    shopsSales.appendChild(tRow);
+};
 
+// >>>>>>>>>>>>>>>>>>>>>>>> RENDERING THE TABLE!
 
-
-
-
-
-
-
-
-    
-    // for (let i=0; i<5 ; i++){
-    //     let row=document.createElement('tr');
-
-    //     for (let x=0; x<hours.length; x++){
-    //         let cell=document.createElement('td');
-    //         let cellText= document.createTextNode('cell in row' +i+ ', column'+x);
-    //         cell.appendChild(cellText);
-    //         row.appendChild(cell);
-    //     }
-    //     tableBody.appendChild(row);
-    // }
-    myTable.appendChild(tableBody);
-    body.appendChild(myTable);
-    myTable.setAttribute('border', '2');
-
-}
-
-getTable([['Branch', hours], [seattle.cityName, (seattle.cookiesEachHourFn())], [tokyo.cityName, tokyo.cookiesEachHourFn()], [dubai.cityName, dubai.cookiesEachHourFn()], [paris.cityName, paris.cookiesEachHourFn()], [lima.cityName, lima.cookiesEachHourFn()]]);
-
-
-
-// let shopsTable=document.createElement('table');
-// let tableRow=document.createElement('tr')
-// let theCity= document.createElement('td')
-// theCity.innerText=lima.cityName;
-// main.appendChild(theCity);
-
-
-
-// function createTable(tableData) {
-//     let table = document.createElement('table');
-//     let tableBody = document.createElement('tbody');
-  
-//     tableData.forEach(function(cityData) {
-//       let row = document.createElement('tr');
-  
-//       cityData.forEach(function(cellData) {
-//         let cell = document.createElement('td');
-//         cell.appendChild(document.createTextNode(cellData));
-//         row.appendChild(cell);
-//       });
-  
-//       tableBody.appendChild(row);
-//     });
-  
-//     table.appendChild(tableBody);
-//     document.body.appendChild(table);
-//   }
-  
-// createTable([['Branch', hours], [seattle.cityName, (seattle.cookiesEachHourFn())], [tokyo.cityName, tokyo.cookiesEachHourFn()], [dubai.cityName, dubai.cookiesEachHourFn()], [paris.cityName, paris.cookiesEachHourFn()], [lima.cityName, lima.cookiesEachHourFn()]]);
-
-// let theCity= document.createElement('h3')
-// theCity.innerText=this.cityName;
-// main.appendChild(theCity);
-// let unorderedList= document.createElement('ul');
-// let count= document.createElement('li');
-// count.innerText=this.cookiesEachHour;
-// unorderedList.appendChild(count);
-// main.appendChild(unorderedList);
-
-// let render=function(){
-//     let unorderedList= document.createElement('ul');
-//     let type= document.createElement('li');
-//     type.innerText=lima.cookiesEachHourFn();
-//     main.appendChild(unorderedList);
-    
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// let seattle={
-//     cityName: 'Seattle',
-//     minCus:23,
-//     maxCus:65,
-//     avgSale:6.3,
-//     hours:['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm'],
-//     cookiesPerHour:[],
-//     customerNumber:0,
-//     randomGenerator: function(min,max){
-//         return Math.floor(Math.random()*(max-min+1)+min);
-//     },
-    
-//     customersHour:function(){
-//       let number=this.customerNumber;
-//       number=randomGenerator(23,65);
-//       return number;
-//     },
-//     cookiesHour: function(){
-//         let Hour= this.onehHour;
-//         Hour= randomGenerator(23,65)*this.avgSale;
-//         return Hour;
-//     },
-//     // eachHour: function (){
-//     //     let sum=0;
-//     //     let element = document.getElementById(this.cityName);
-//     //     for (let i=0; i<this.hours.length; i++){
-//     //         this.cookies.push(this.cookiesHour());
-//     //         sum=sum+this.cookies[i];
-//     //         sales.innerHTML = this.hours[i] + ':' + this.cookies[i];
-            
-//     //     };
-        
-//     // },
-   
-
-// };
-
-
-
-// // console.log(seattle);
-// console.log(seattle.customersHour());
-// console.log(seattle.cookiesHour());
-// // console.log(seattle.eachHour());
-// // console.log(seattle.hours, seattle.cookiesHour());
-// for (let i=0; i<seattle.hours.length; i++){
-//     console.log(seattle.hours[i] + ':' + seattle.cookiesHour());
-// };
-
-
-// let tokyo={
-//     minCus:3,
-//     maxCus:24,
-//     avgSale:1.2,
-    
-
-// }
-
-// let dubai={
-//     minCus:11,
-//     maxCus:38,
-//     avgSale:3.7,
-    
-
-// }
-
-// let paris={
-//     minCus:20,
-//     maxCus:38,
-//     avgSale:2.3,
-    
-
-// }
-
-// let lima={
-//     minCus:2,
-//     maxCus:16,
-//     avgSale:4.6,
-    
-
-// }
-
-
-
-// let unorderedList= document.createElement('ul');
-// main.appendChild(unorderedList);
-// let eachHourCookies= document.createElement('li');
-// eachHourCookies.innerText=seattle.
-// unorderedList.appendChild(eachHourCookies);
+(function renderTable(){
+    getHeader();
+    for( let i= 0; i< citiesList.length; i++){
+        citiesList[i].render();
+    }
+    getFooter();
+})();
