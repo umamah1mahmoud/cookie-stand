@@ -1,6 +1,6 @@
 'use strict';
 // >>>>>>>>>>>>>>>>>>>>>>>>>> GLOBAL
-
+let form=document.getElementById('newBranchForm');
 let shopsSales=document.getElementById('shopTable');
 let hours=['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm'];
 
@@ -55,6 +55,7 @@ Shop.prototype.render= function(){
         tData.textContent= this.cookiesEachHour[i];
         tRow.appendChild(tData);
     }
+
     let tHeader= document.createElement ('th');
     tHeader.textContent= this.totalCookiesDaily;
     tRow.appendChild(tHeader);
@@ -87,18 +88,24 @@ function getHeader(){
         tHeader.textContent= hours[i];
         tRow.appendChild(tHeader);
     }
+
     tHeader= document.createElement('th');
     tHeader.textContent= 'Branches Total Sales'
     tRow.appendChild(tHeader);
     shopsSales.appendChild(tRow);
+
+    
 };
+
+
+
 
 // >>>>>>>>>>>>>>>>>>>>>>>> Creating Table Footer
 
 function getFooter(){
     let tRow= document.createElement('tr');
     let tHeader= document.createElement ('th');
-    tHeader.textContent= 'Hourly Total Sales for All Branches';
+    tHeader.textContent= 'Hourly Sales for All Branches';
     tRow.appendChild(tHeader);
     let totalOfTotals= 0;
     for (let i=0; i< hours.length; i++){
@@ -111,10 +118,12 @@ function getFooter(){
         tHeader.textContent = hourlyTotal;
         tRow.appendChild(tHeader);
     }
+    
     tHeader= document.createElement('th');
     tHeader.textContent= totalOfTotals;
     tRow.appendChild(tHeader);
     shopsSales.appendChild(tRow);
+    
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>> RENDERING THE TABLE!
@@ -125,4 +134,39 @@ function getFooter(){
         citiesList[i].render();
     }
     getFooter();
+
 })();
+
+
+
+// >>>>>>>>>>>>>>>>>>>>>>>> Adding event for the form filling
+
+
+form.addEventListener('submit', function newInput(event){
+    event.preventDefault();
+    let newCity= (event.target.branch.value);
+    let minCustomers= (event.target.minHourlyCustomers.value);
+    let maxCustomers= (event.target.maxHourlyCustomers.value);
+    let newAvg= (event.target.average.value);
+
+    let newResult= new Shop(newCity, minCustomers, maxCustomers, newAvg,);
+    newResult.render();
+    
+})
+
+
+
+// form.addEventListener('submit', function(event){
+//     event.preventDefault();
+//     let newCity= event.target.newCity.value;
+//     if(newCity==='' || newCity=== ' '){
+//         alert('Please, provide a city name! cannot provide empty input');
+//     }else{
+//         let newRow= document.createElement('tr')
+//         let newData= document.createElement('td');
+//         newData.textContent=newCity;
+//         newRow.appendChild(newData)
+//         shopsSales.appendChild(newRow);
+//     }
+    
+// })
