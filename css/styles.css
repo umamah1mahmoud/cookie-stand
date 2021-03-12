@@ -35,6 +35,7 @@ nav{
 
 a {
     color: rgb(105, 47, 5);
+    text-decoration: none;
 }
 
 nav ul{
