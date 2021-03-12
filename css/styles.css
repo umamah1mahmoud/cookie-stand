@@ -1,15 +1,74 @@
+*{
+    box-sizing: border-box;
+}
+
 body {
     background-image: url("https://i.pinimg.com/474x/bb/92/b1/bb92b121bf451e64372bf92fbfc4ad42.jpg");
     background-attachment: fixed;
     background-color: #cccccc;
     font-family: 'Courier New', Courier, monospace;
-  }
+}
+
+nav{
+    background-color: rgba(255, 255, 255, 0.877);
+    height: 58px;
+    margin-right: 100px; margin-left: 100px;
+}
+
+.name{
+    position: relative;
+    top: 15px;
+    left: 20px;
+    font-size: 30px;
+    color: rgb(131, 96, 73);
+    font-weight: bold;
+}
+
+.imgNav{
+    display: inline;
+    float: left;
+    width: 150px; height: auto;
+    transform: rotateY(180deg);
+    margin-left: 15px;
+}
+
+nav ul{
+    position: absolute;
+    top: 35px;
+    left: 600px;
+    color: rgb(105, 47, 5);
+    font-size: 15px;
+}
+
+nav ul li{
+    display: inline;
+    float: right;
+    margin-left: 10px; margin-right: 10px;
+    
+}
 
 .mainHome{
-    text-align: center; background-color: rgba(255, 249, 240, 0.781); padding: 20px; margin-top: 80px;
+    text-align: center; background-color: rgba(255, 249, 240, 0.781); padding: 20px; margin-top: 50px;
+    margin-right: 100px; margin-left: 100px;
+}
+
+.imgSal { display: block; margin-left: auto;
+    margin-right: auto;
+    width: 500px; height: auto;
+}
+
+.threeImg{
+    height: 100px;
+    margin-left: 30px ; margin-right: 30px;
 }
 
 
+.footer{
+    text-align: center; color: rgb(66, 58, 47); padding: 20px;
+    margin-right: 100px; margin-left: 100px;  font-weight: 700; text-shadow:  2px 2px rgb(255, 250, 241);
+}
+
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>SALES PAGE STYLES<<<<<<<<<<<<<<<<<<<<<<<<<< */
 .mainSales{
     text-align: center; background-color: rgba(255, 249, 240, 0.938); padding: 20px; margin-top: 60px;
   }
@@ -52,7 +111,33 @@ legend{
     margin-right: auto;
 }
 
-img { display: block; margin-left: auto;
-    margin-right: auto;
-    width: 500px; height: auto;
+
+
+
+.sales{
+    text-align: center; font-size: 40px; color:  rgb(105, 47, 5); text-shadow: 3px 3px rgb(190, 187, 187);
+} 
+
+.salesHome{
+ background-color: rgba(255, 249, 240, 0.781); padding: 20px; margin-top: 50px;
+    margin-right: 100px; margin-left: 100px;
+}
+
+.salesUl{
+    margin-left: 370px; color: rgb(66, 58, 47); font-weight: 500px;
+}
+
+
+
+.aboutUsHome{background-color: rgba(255, 249, 240, 0.884); padding: 20px; margin-top: 50px;
+    margin-right: 100px; margin-left: 100px;
+}
+    
+
+.aboutUsP{
+    margin-left: 200px; margin-right: 200px; color: rgb(66, 58, 47); font-weight: 500px;
+}
+
+.locationsUl{
+    margin-left: 415px; color: rgb(66, 58, 47); font-weight: 500px;
 }
