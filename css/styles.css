@@ -22,6 +22,7 @@ nav{
     font-size: 30px;
     color: rgb(131, 96, 73);
     font-weight: bold;
+    text-decoration: none;
 }
 
 .imgNav{
@@ -30,6 +31,10 @@ nav{
     width: 150px; height: auto;
     transform: rotateY(180deg);
     margin-left: 15px;
+}
+
+a {
+    color: rgb(105, 47, 5);
 }
 
 nav ul{
@@ -44,6 +49,7 @@ nav ul li{
     display: inline;
     float: right;
     margin-left: 10px; margin-right: 10px;
+    text-decoration: none;
     
 }
 
@@ -70,7 +76,7 @@ nav ul li{
 
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>SALES PAGE STYLES<<<<<<<<<<<<<<<<<<<<<<<<<< */
 .mainSales{
-    text-align: center; background-color: rgba(255, 249, 240, 0.938); padding: 20px; margin-top: 60px;
+    text-align: center; background-color: rgba(255, 249, 240, 0.938); padding: 20px; margin-top: 60px; margin-right: 100px; margin-left: 100px;
   }
 
 table{
@@ -112,7 +118,7 @@ legend{
 }
 
 
-
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>Working Hours<<<<<<<<<<<<<<<<<<<<<<<<<< */
 
 .sales{
     text-align: center; font-size: 40px; color:  rgb(105, 47, 5); text-shadow: 3px 3px rgb(190, 187, 187);
@@ -127,7 +133,7 @@ legend{
     margin-left: 370px; color: rgb(66, 58, 47); font-weight: 500px;
 }
 
-
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>aboutUs<<<<<<<<<<<<<<<<<<<<<<<<<< */
 
 .aboutUsHome{background-color: rgba(255, 249, 240, 0.884); padding: 20px; margin-top: 50px;
     margin-right: 100px; margin-left: 100px;
@@ -137,6 +143,8 @@ legend{
 .aboutUsP{
     margin-left: 200px; margin-right: 200px; color: rgb(66, 58, 47); font-weight: 500px;
 }
+
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>locations<<<<<<<<<<<<<<<<<<<<<<<<<< */
 
 .locationsUl{
     margin-left: 415px; color: rgb(66, 58, 47); font-weight: 500px;
